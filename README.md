@@ -1,72 +1,116 @@
 zaifapi
 ======================
-zaif‚ªŒöŠJ‚µ‚Ä‚¢‚éAPI‚ğŠÈ’P‚ÉŒÄ‚×‚é—p‚É‚µ‚Ü‚µ‚½B
-‚²—˜—p‚Í©ŒÈÓ”C‚Å‚²©—R‚É‚Ç‚¤‚¼
+zaifãŒå…¬é–‹ã—ã¦ã„ã‚‹APIã‚’ç°¡å˜ã«å‘¼ã¹ã‚‹ç”¨ã«ã—ã¾ã—ãŸã€‚
+æœ¬ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã¯ãƒ†ãƒƒã‚¯ãƒ“ãƒ¥ãƒ¼ãƒ­éå…¬å¼ã§ã™ã€‚ã”åˆ©ç”¨ã¯è‡ªå·±è²¬ä»»ã§ã”è‡ªç”±ã«ã©ã†ãã€‚
 
-g‚¢•û
+ä½¿ã„æ–¹
 ------
-‚PDpipƒRƒ}ƒ“ƒh‚ğÀs‚µAƒ‚ƒWƒ…[ƒ‹‚ğƒ_ƒEƒ“ƒ[ƒh‚µ‚Ä‚­‚¾‚³‚¢
+ï¼‘ï¼pipã‚³ãƒãƒ³ãƒ‰ã‚’å®Ÿè¡Œã—ã€ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã‚’ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã—ã¦ãã ã•ã„
 
     pip install zaifapi
 
-‚QDƒNƒ‰ƒX‚ğƒCƒ“ƒ|[ƒg‚µA‰º‹L—á‚Ì—p‚Ég—p‚µ‚Ä‚­‚¾‚³‚¢
+ï¼’ï¼ã‚¯ãƒ©ã‚¹ã‚’ã‚¤ãƒ³ãƒãƒ¼ãƒˆã—ã€ä¸‹è¨˜ä¾‹ã®ç”¨ã«ä½¿ç”¨ã—ã¦ãã ã•ã„
 
-    from zaifapi.impl import ZaifPublicApi, ZaifPrivateApi
+    from zaifapi import *
+    
     zaif = ZaifPublicApi()
     print(zaif.last_price('btc_jpy'))
     
     zaif = ZaifPrivateApi(key, secret)
     print(zaif.get_info())
+    zaif = ZaifPrivateTokenApi(token)
+    print(zaif.get_info())
+    
+    token = ZaifTokenApi(client_id, client_secret)
+    reponse = token.get_token(code):
+    print(reponse)
+    >>>{'token_type': 'bearer',
+        'state': '2a99cc45cef04c358dbc26db880f9d03',
+        'access_token': 'bb12f3de5df2472290ff15331824a9cf', 
+        'refresh_token': 'ef972ad13e484e17abffbfd5dba51750', 
+        'expires_in': 3600}
+    
 
-
-‹@”\Ğ‰î
+æ©Ÿèƒ½ç´¹ä»‹
 ------
 ### ZaifPublicApi
-#### Zaif‚ªŒöŠJ‚µ‚Ä‚¢‚é”FØî•ñ‚ª—v‚ç‚È‚¢API‚ğÀs‚·‚éƒNƒ‰ƒX‚Å‚·
+#### ZaifãŒå…¬é–‹ã—ã¦ã„ã‚‹èªè¨¼æƒ…å ±ãŒè¦ã‚‰ãªã„APIã‚’å®Ÿè¡Œã™ã‚‹ã‚¯ãƒ©ã‚¹ã§ã™
 ***
-last_price(currency_pair):I’l‚ğæ“¾
+last_price(currency_pair):çµ‚å€¤ã‚’å–å¾—
 
-ticker(currency_pair):ƒeƒBƒbƒJ[
+ticker(currency_pair):ãƒ†ã‚£ãƒƒã‚«ãƒ¼
 
-trades(currency_pair):‘S‚Ä‚Ìæˆø—š—ğ
+trades(currency_pair):å…¨ã¦ã®å–å¼•å±¥æ­´
 
-depth(currency_pair):”Âî•ñ
+depth(currency_pair):æ¿æƒ…å ±
 
-streaming(currency_pair):websocket‚ğ—˜—p‚µ‚½ƒŠƒAƒ‹ƒ^ƒCƒ€”Âî•ñ‚ÆI’l
+streaming(currency_pair):websocketã‚’åˆ©ç”¨ã—ãŸãƒªã‚¢ãƒ«ã‚¿ã‚¤ãƒ æ¿æƒ…å ±ã¨çµ‚å€¤
 
-| –¼‘O | •K{ | à–¾ | ƒfƒtƒHƒ‹ƒg’l | 
+| åå‰ | å¿…é ˆ | èª¬æ˜ | ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ | 
 |:-----------|:------------:|:-----------|:-----------| 
-| currency_pair | ü | æ“¾‚·‚é’Ê‰İƒyƒA | - | 
-–ß‚è’lFjson
+| currency_pair | â—¯ | å–å¾—ã™ã‚‹é€šè²¨ãƒšã‚¢ | - | 
+æˆ»ã‚Šå€¤ï¼šjson
 
-currency_pair‚Íbtc_jpyAxem_jpyAmona_jpyAmona_btc‚ªw’è‰Â”\‚Å‚·
+currency_pairã¯btc_jpyã€xem_jpyã€mona_jpyã€mona_btcãŒæŒ‡å®šå¯èƒ½ã§ã™
 
-Ú×‚Í‰º‹LQl‚ğŒä——‚­‚¾‚³‚¢B
+è©³ç´°ã¯ä¸‹è¨˜å‚è€ƒã‚’å¾¡è¦§ãã ã•ã„ã€‚
 
-[Ql](https://corp.zaif.jp/api-docs/)
+[å‚è€ƒ](https://corp.zaif.jp/api-docs/)
 ***
 
 ### ZaifPrivateApi
-#### Zaif‚ªŒöŠJ‚µ‚Ä‚¢‚é”FØî•ñ‚ª•K—v‚ÈAPI‚ğÀs‚·‚éƒNƒ‰ƒX‚Å‚·
+#### ZaifãŒå…¬é–‹ã—ã¦ã„ã‚‹èªè¨¼æƒ…å ±ãŒå¿…è¦ãªAPIã‚’å®Ÿè¡Œã™ã‚‹ã‚¯ãƒ©ã‚¹ã§ã™
 ***
-ƒCƒ“ƒXƒ^ƒ“ƒX¶¬‚ÉAzaif‚Å”­so—ˆ‚ékey‚Æsecret‚Ì•¶š—ñ‚ğw’è‚µ‚Ä‚­‚¾‚³‚¢B
-‚»‚ÌÛAŒ ŒÀİ’è‚É‚²’ˆÓ‚­‚¾‚³‚¢B
+ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆæ™‚ã«ã€zaifã§ç™ºè¡Œå‡ºæ¥ã‚‹keyã¨secretã®æ–‡å­—åˆ—ã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚
+ãã®éš›ã€æ¨©é™è¨­å®šã«ã”æ³¨æ„ãã ã•ã„ã€‚
 
-Àso—ˆ‚éƒƒ\ƒbƒh–¼‚âƒpƒ‰ƒ[ƒ^‚Í‰º‹LQlƒy[ƒW‚»‚Ì‚Ü‚Ü‚È‚Ì‚ÅA‚»‚±‚ğ‚²——‚­‚¾‚³‚¢B
+å®Ÿè¡Œå‡ºæ¥ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰ã‚„ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã¯ä¸‹è¨˜å‚è€ƒãƒšãƒ¼ã‚¸ãã®ã¾ã¾ãªã®ã§ã€ãã“ã‚’ã”è¦§ãã ã•ã„ã€‚
 
-‚½‚¾‚µAfromƒpƒ‰ƒ[ƒ^‚Ífrom_num‚Æw’è‚µ‚Ä‚­‚¾‚³‚¢B
+ãŸã ã—ã€fromãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã¯from_numã¨æŒ‡å®šã—ã¦ãã ã•ã„ã€‚
 
-–ß‚è’l‚Í‚·‚×‚Äjson‚Æ‚È‚Á‚Ä‚¢‚Ü‚·B
+æˆ»ã‚Šå€¤ã¯ã™ã¹ã¦jsonã¨ãªã£ã¦ã„ã¾ã™ã€‚
 
-[Ql](https://corp.zaif.jp/api-docs/trade-api/)
+[å‚è€ƒ](https://corp.zaif.jp/api-docs/trade-api/)
 ***
-  
-ŠÖ˜Aî•ñ
+
+### ZaifPrivateTokenApi
+#### ZaifPrivateApiã‚’OAuthä¸‹ã§é‹ç”¨ã—ãŸã„æ™‚ã«åˆ©ç”¨ã™ã‚‹ã‚¯ãƒ©ã‚¹ã§ã™
+***
+ZaifPrivateTokenApiã¨é•ã„ã€OAuthã§ç™ºè¡Œã•ã‚ŒãŸtokenã‚’å¼•æ•°ã«æŒ‡å®šã—ã¾ã™ã€‚
+
+å®Ÿè¡Œå‡ºæ¥ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰ã‚„ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã¯ZaifPrivateApiã¨åŒæ§˜ã«ãªã‚Šã¾ã™ã€‚
+
+***
+
+### ZaifTokenApi
+#### OAuthé€£æºä½¿ç”¨æ™‚ã«åˆ©ç”¨ã™ã‚‹ã‚¯ãƒ©ã‚¹ã§ã™ã€‚
+***
+client_id, client_secretã‚’æŒ‡å®šã—ã¦ã€OAuthèªå¯å‡¦ç†ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
+
+get_token(code, redirect_uri=None):
+ãƒˆãƒ¼ã‚¯ãƒ³ã‚’å–å¾—ã—ã¾ã™
+| åå‰ | å¿…é ˆ | èª¬æ˜ | ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ | 
+|:-----------|:------------:|:-----------|:-----------| 
+| code | â—¯ | èªå¯ç”»é¢ã‹ã‚‰ãƒªãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆã•ã‚ŒãŸæ™‚ã®codeãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’æŒ‡å®šã—ã¾ã™ | - |
+| redirect_uri | â˜“ | èªå¯ç”»é¢ã«ãƒªãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆã—ãŸéš›ã€redirect_uriã‚’æŒ‡å®šã—ã¦ã„ã‚‹å ´åˆã¯åŒå€¤ã‚’æŒ‡å®šã—ã¾ã™ | None |
+
+refresh_token(refresh_token):
+ãƒˆãƒ¼ã‚¯ãƒ³ã‚’å†ç™ºè¡Œã—ã¾ã™
+| åå‰ | å¿…é ˆ | èª¬æ˜ | ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ | 
+|:-----------|:------------:|:-----------|:-----------| 
+| refresh_token | â—¯ | tokenç™ºè¡Œæ™‚(get_tokenå®Ÿè¡Œæ™‚)ã€è¿”å´ã•ã‚ŒãŸrefresh_tokenå€¤ã‚’æŒ‡å®šã—ã¾ã™ | - |
+å„é–¢æ•°ã®æˆ»ã‚Šå€¤ã¯ä¸‹è¨˜ã‚’å‚ç…§ã—ã¦ãã ã•ã„ã€‚
+[OAuthèªè¨¼æ©Ÿèƒ½ã‚’åˆ©ç”¨æ‰‹é †](https://corp.zaif.jp/api-docs/oauth/)
+
+***
+
+
+é–¢é€£æƒ…å ±
 --------
-1. [ƒOƒOƒŒƒJƒX(ƒuƒƒO)](http://gugurekasu.blogspot.jp/)
+1. [[Zaif]Pythonã§ç°¡å˜ã«ä»®æƒ³é€šè²¨ã®å–å¼•ãŒå‡ºæ¥ã‚‹ã‚ˆã†ã«ã—ã¦ã¿ãŸ(Qiita)](http://qiita.com/Akira-Taniguchi/items/e52930c881adc6ecfe07)
 2. [LinkedIn](https://jp.linkedin.com/in/akirataniguchi1)
  
-ƒ‰ƒCƒZƒ“ƒX
+ãƒ©ã‚¤ã‚»ãƒ³ã‚¹
 ----------
 Distributed under the [MIT License][mit].
 [MIT]: http://www.opensource.org/licenses/mit-license.php
