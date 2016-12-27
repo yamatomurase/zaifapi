@@ -88,17 +88,22 @@ ZaifPrivateTokenApiと違い、OAuthで発行されたtokenを引数に指定し
 client_id, client_secretを指定して、OAuth認可処理を実行します。
 
 get_token(code, redirect_uri=None):
+
 トークンを取得します
+
 | 名前 | 必須 | 説明 | デフォルト値 | 
 |:-----------|:------------:|:-----------|:-----------| 
 | code | ◯ | 認可画面からリダイレクトされた時のcodeパラメータを指定します | - |
 | redirect_uri | ☓ | 認可画面にリダイレクトした際、redirect_uriを指定している場合は同値を指定します | None |
 
 refresh_token(refresh_token):
+
 トークンを再発行します
+
 | 名前 | 必須 | 説明 | デフォルト値 | 
 |:-----------|:------------:|:-----------|:-----------| 
 | refresh_token | ◯ | token発行時(get_token実行時)、返却されたrefresh_token値を指定します | - |
+
 各関数の戻り値は下記を参照してください。
 [OAuth認証機能を利用手順](https://corp.zaif.jp/api-docs/oauth/)
 
