@@ -105,7 +105,7 @@ refresh_token(refresh_token):
 | refresh_token | ◯ | token発行時(get_token実行時)、返却されたrefresh_token値を指定します | - |
 
 各関数の戻り値は下記を参照してください。
-[OAuth認証機能を利用手順](https://corp.zaif.jp/api-docs/oauth/)
+[OAuth認証機能利用手順](https://corp.zaif.jp/api-docs/oauth/)
 
 ***
 
