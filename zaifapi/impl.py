@@ -78,6 +78,7 @@ SCHEMA = {
 
 class AbsZaifApi(object):
     __metaclass__ = ABCMeta
+    _api_domain = 'api.zaif.jp'
 
     def params_pre_processing(self, schema_keys, params):
         schema = self.__get_schema(schema_keys)
@@ -107,7 +108,7 @@ class AbsZaifApi(object):
 
 
 class ZaifPublicApi(AbsZaifApi):
-    __API_URL = 'https://api.zaif.jp/api/1/{}/{}'
+    __API_URL = 'https://{}/api/1/{}/{}'
 
     def __params_pre_processing(self, currency_pair):
         params = {
@@ -117,7 +118,7 @@ class ZaifPublicApi(AbsZaifApi):
 
     def __execute_api(self, func_name, currency_pair):
         self.__params_pre_processing(currency_pair)
-        return get_response(self.__API_URL.format(func_name, currency_pair))
+        return get_response(self.__API_URL.format(self._api_domain, func_name, currency_pair))
 
     def last_price(self, currency_pair):
         return self.__execute_api(inspect.currentframe().f_code.co_name, currency_pair)
@@ -140,7 +141,7 @@ class ZaifPublicApi(AbsZaifApi):
 
 
 class AbsZaifPrivateApi(AbsZaifApi):
-    __API_URL = 'https://api.zaif.jp/tapi'
+    __API_URL = 'https://{}/tapi'
 
     @abstractmethod
     def get_header(self, params):
@@ -156,7 +157,7 @@ class AbsZaifPrivateApi(AbsZaifApi):
         params = self.params_pre_processing(schema_keys, params)
         params = self.__get_parameter(func_name, params)
         header = self.get_header(params)
-        res = get_response(self.__API_URL, params, header)
+        res = get_response(self.__API_URL.format(self._api_domain), params, header)
         if res['success'] == 0:
             raise Exception(res['error'])
         return res['return']
