@@ -153,7 +153,11 @@ class AbsZaifPrivateApi(AbsZaifApi):
         params['nonce'] = int(time.mktime(datetime.now().timetuple()))
         return urlencode(params)
 
-    def __execute_api(self, func_name, schema_keys=[], params={}):
+    def __execute_api(self, func_name, schema_keys=None, params=None):
+        if schema_keys is None:
+            schema_keys = []
+        if params is None:
+            params = {}
         params = self.params_pre_processing(schema_keys, params)
         params = self.__get_parameter(func_name, params)
         header = self.get_header(params)
