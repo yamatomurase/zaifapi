@@ -9,7 +9,7 @@ from datetime import datetime
 from abc import ABCMeta, abstractmethod
 from websocket import create_connection
 from future.moves.urllib.parse import urlencode
-from zaifapi.api_common import get_response
+from zaifapi.api_common import get_response, AbsZaifBaseApi
 
 SCHEMA = {
     'from_num': {
@@ -76,7 +76,7 @@ SCHEMA = {
 }
 
 
-class AbsZaifApi(object):
+class AbsZaifApi(AbsZaifBaseApi):
     __metaclass__ = ABCMeta
     _api_domain = 'api.zaif.jp'
 
@@ -108,7 +108,7 @@ class AbsZaifApi(object):
 
 
 class ZaifPublicApi(AbsZaifApi):
-    __API_URL = 'https://{}/api/1/{}/{}'
+    __API_URL = '{}://{}/api/1/{}/{}'
 
     def __params_pre_processing(self, currency_pair):
         params = {
@@ -118,7 +118,7 @@ class ZaifPublicApi(AbsZaifApi):
 
     def __execute_api(self, func_name, currency_pair):
         self.__params_pre_processing(currency_pair)
-        return get_response(self.__API_URL.format(self._api_domain, func_name, currency_pair))
+        return get_response(self.__API_URL.format(self.get_protocol(), self._api_domain, func_name, currency_pair))
 
     def last_price(self, currency_pair):
         return self.__execute_api(inspect.currentframe().f_code.co_name, currency_pair)
@@ -141,7 +141,7 @@ class ZaifPublicApi(AbsZaifApi):
 
 
 class AbsZaifPrivateApi(AbsZaifApi):
-    __API_URL = 'https://{}/tapi'
+    __API_URL = '{}://{}/tapi'
 
     @abstractmethod
     def get_header(self, params):
@@ -161,7 +161,7 @@ class AbsZaifPrivateApi(AbsZaifApi):
         params = self.params_pre_processing(schema_keys, params)
         params = self.__get_parameter(func_name, params)
         header = self.get_header(params)
-        res = get_response(self.__API_URL.format(self._api_domain), params, header)
+        res = get_response(self.__API_URL.format(self.get_protocol(), self._api_domain), params, header)
         if res['success'] == 0:
             raise Exception(res['error'])
         return res['return']

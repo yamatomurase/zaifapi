@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from zaifapi.api_common import get_response
+from zaifapi.api_common import get_response, AbsZaifBaseApi
 
 
-class ZaifTokenApi(object):
-    __API_URL = 'https://oauth.zaif.jp/v1/token'
+class ZaifTokenApi(AbsZaifBaseApi):
+    __API_URL = '{}://{}/v1/token'
+    _api_domain = 'oauth.zaif.jp'
 
     def __init__(self, client_id, client_secret):
         self.__client_id = client_id
@@ -19,7 +20,7 @@ class ZaifTokenApi(object):
         }
         if redirect_uri:
             params['redirect_uri'] = redirect_uri
-        return get_response(self.__API_URL, params)
+        return get_response(self.__API_URL.format(self.get_protocol(), self._api_domain), params)
 
     def refresh_token(self, refresh_token):
         params = {
