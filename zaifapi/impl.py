@@ -35,8 +35,7 @@ SCHEMA = {
         'type': ['string', 'integer']
     },
     'currency_pair': {
-        'type': 'string',
-        'allowed': ['btc_jpy', 'xem_jpy', 'mona_jpy', 'mona_btc']
+        'type': 'string'
     },
     'currency': {
         'required': True,
