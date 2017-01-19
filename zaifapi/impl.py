@@ -39,8 +39,7 @@ SCHEMA = {
     },
     'currency': {
         'required': True,
-        'type': 'string',
-        'allowed': ['jpy', 'btc', 'mona']
+        'type': 'string'
     },
     'address': {
         'required': True,
