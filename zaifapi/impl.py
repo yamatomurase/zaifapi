@@ -133,9 +133,12 @@ class ZaifPublicApi(AbsZaifApi):
     def depth(self, currency_pair):
         return self._execute_api(inspect.currentframe().f_code.co_name, currency_pair)
 
+    def currency_pairs(self, currency_pair):
+        return self._execute_api(inspect.currentframe().f_code.co_name, currency_pair)
+
     def streaming(self, currency_pair):
         self._params_pre_processing(currency_pair)
-        ws = create_connection('ws://api.zaif.jp:8888/stream?currency_pair={}'.format(currency_pair))
+        ws = create_connection('ws://{}:8888/stream?currency_pair={}'.format(self._api_domain, currency_pair))
         result = ws.recv()
         ws.close()
         return json.loads(result)
