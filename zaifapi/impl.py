@@ -5,6 +5,7 @@ import hmac
 import hashlib
 import inspect
 import cerberus
+import requests
 from datetime import datetime
 from abc import ABCMeta, abstractmethod
 from websocket import create_connection
@@ -117,9 +118,13 @@ class ZaifPublicApi(AbsZaifApi):
         }
         super(ZaifPublicApi, self).params_pre_processing(['currency_pair'], params)
 
-    def _execute_api(self, func_name, currency_pair):
+    def _execute_api(self, func_name, currency_pair, params=None):
         self._params_pre_processing(currency_pair)
-        return get_response(self._API_URL.format(self.get_protocol(), self._api_domain, func_name, currency_pair))
+        url = self._API_URL.format(self.get_protocol(), self._api_domain, func_name, currency_pair)
+        response = requests.get(url, params=params)
+        if response.status_code != 200:
+            raise Exception('return status code is {}'.format(response.status_code))
+        return json.loads(response.text)
 
     def last_price(self, currency_pair):
         return self._execute_api(inspect.currentframe().f_code.co_name, currency_pair)
@@ -135,6 +140,15 @@ class ZaifPublicApi(AbsZaifApi):
 
     def currency_pairs(self, currency_pair):
         return self._execute_api(inspect.currentframe().f_code.co_name, currency_pair)
+
+    def ohlc_data(self, currency_pair, period='1d', count=1000, get_to_epoch_time=None):
+        params = {
+            'period': period,
+            'count': count
+        }
+        if get_to_epoch_time:
+            params['get_to_epoch_time'] = get_to_epoch_time
+        return self._execute_api(inspect.currentframe().f_code.co_name, currency_pair, params)
 
     def streaming(self, currency_pair):
         self._params_pre_processing(currency_pair)
