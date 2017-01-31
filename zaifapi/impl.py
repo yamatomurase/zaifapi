@@ -141,14 +141,8 @@ class ZaifPublicApi(AbsZaifApi):
     def currency_pairs(self, currency_pair):
         return self._execute_api(inspect.currentframe().f_code.co_name, currency_pair)
 
-    def ohlc_data(self, currency_pair, period='1d', count=1000, to_epoch_time=None):
-        params = {
-            'period': period,
-            'count': count
-        }
-        if to_epoch_time:
-            params['to_epoch_time'] = to_epoch_time
-        return self._execute_api(inspect.currentframe().f_code.co_name, currency_pair, params)
+    def everything(self, func_name, currency_pair, params):
+        return self._execute_api(func_name, currency_pair, params)
 
     def streaming(self, currency_pair):
         self._params_pre_processing(currency_pair)
