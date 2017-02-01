@@ -74,6 +74,9 @@ SCHEMA = {
     },
     'is_token': {
         'type': 'boolean'
+    },
+    'is_token_both': {
+        'type': 'boolean'
     }
 }
 
@@ -210,7 +213,7 @@ class AbsZaifPrivateApi(AbsZaifApi):
         return self._execute_api(inspect.currentframe().f_code.co_name, schema_keys, kwargs)
 
     def cancel_order(self, **kwargs):
-        schema_keys = ['order_id', 'is_token']
+        schema_keys = ['order_id', 'is_token', 'is_token_both']
         return self._execute_api(inspect.currentframe().f_code.co_name, schema_keys, kwargs)
 
     def trade(self, **kwargs):
