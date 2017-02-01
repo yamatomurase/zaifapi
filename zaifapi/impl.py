@@ -195,7 +195,7 @@ class AbsZaifPrivateApi(AbsZaifApi):
         return self._execute_api(inspect.currentframe().f_code.co_name, schema_keys, kwargs)
 
     def active_orders(self, **kwargs):
-        schema_keys = ['currency_pair', 'is_token']
+        schema_keys = ['currency_pair', 'is_token', 'is_token_both']
         return self._execute_api(inspect.currentframe().f_code.co_name, schema_keys, kwargs)
 
     def _inner_history_api(self, func_name, kwargs):
@@ -213,7 +213,7 @@ class AbsZaifPrivateApi(AbsZaifApi):
         return self._execute_api(inspect.currentframe().f_code.co_name, schema_keys, kwargs)
 
     def cancel_order(self, **kwargs):
-        schema_keys = ['order_id', 'is_token', 'is_token_both']
+        schema_keys = ['order_id', 'is_token']
         return self._execute_api(inspect.currentframe().f_code.co_name, schema_keys, kwargs)
 
     def trade(self, **kwargs):
