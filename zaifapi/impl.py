@@ -144,6 +144,9 @@ class ZaifPublicApi(AbsZaifApi):
     def currency_pairs(self, currency_pair):
         return self._execute_api(inspect.currentframe().f_code.co_name, currency_pair)
 
+    def currencies(self, currency):
+        return self._execute_api(inspect.currentframe().f_code.co_name, currency)
+
     def everything(self, func_name, currency_pair, params):
         return self._execute_api(func_name, currency_pair, params)
 
