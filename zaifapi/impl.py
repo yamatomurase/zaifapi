@@ -79,6 +79,8 @@ SCHEMA = {
         'type': 'boolean'
     }
 }
+_MAX_COUNT = 1000
+_MIN_WAIT_TIME_SEC = 1
 
 
 class AbsZaifApi(AbsZaifBaseApi):
@@ -150,12 +152,15 @@ class ZaifPublicApi(AbsZaifApi):
     def everything(self, func_name, currency_pair, params):
         return self._execute_api(func_name, currency_pair, params)
 
-    def streaming(self, currency_pair):
+    def streaming(self, currency_pair, count=_MAX_COUNT, wait_time_sec=1):
+        count = min(count, _MAX_COUNT)
         self._params_pre_processing(currency_pair)
         ws = create_connection('ws://{}:8888/stream?currency_pair={}'.format(self._api_domain, currency_pair))
-        result = ws.recv()
+        for i in range(count):
+            result = ws.recv()
+            yield json.loads(result)
+            time.sleep(wait_time_sec)
         ws.close()
-        return json.loads(result)
 
 
 class AbsZaifPrivateApi(AbsZaifApi):
