@@ -198,6 +198,9 @@ class AbsZaifPrivateApi(AbsZaifApi):
     def get_personal_info(self):
         return self._execute_api(inspect.currentframe().f_code.co_name)
 
+    def get_id_info(self):
+        return self._execute_api(inspect.currentframe().f_code.co_name)
+
     def trade_history(self, **kwargs):
         schema_keys = ['from_num', 'count', 'from_id', 'end_id', 'order', 'since', 'end', 'currency_pair', 'is_token']
         return self._execute_api(inspect.currentframe().f_code.co_name, schema_keys, kwargs)
