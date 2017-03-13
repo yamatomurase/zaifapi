@@ -176,6 +176,10 @@ class _AbsZaifPrivateApi(AbsZaifApi):
     def get_header(self, params):
         raise NotImplementedError()
 
+    @property
+    def nonce(self):
+        return self._nonce
+
     def _get_parameter(self, func_name, params):
         params['method'] = func_name
         self._nonce += 1
