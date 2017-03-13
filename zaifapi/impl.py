@@ -220,7 +220,7 @@ class AbsZaifPrivateApi(AbsZaifApi):
         return self._inner_history_api(inspect.currentframe().f_code.co_name, kwargs)
 
     def withdraw(self, **kwargs):
-        schema_keys = ['currency', 'address', 'message', 'amount', 'opt_fee', 'is_token']
+        schema_keys = ['currency', 'address', 'message', 'amount', 'opt_fee']
         return self._execute_api(inspect.currentframe().f_code.co_name, schema_keys, kwargs)
 
     def cancel_order(self, **kwargs):
@@ -228,7 +228,7 @@ class AbsZaifPrivateApi(AbsZaifApi):
         return self._execute_api(inspect.currentframe().f_code.co_name, schema_keys, kwargs)
 
     def trade(self, **kwargs):
-        schema_keys = ['currency_pair', 'action', 'price', 'amount', 'limit', 'is_token']
+        schema_keys = ['currency_pair', 'action', 'price', 'amount', 'limit']
         return self._execute_api(inspect.currentframe().f_code.co_name, schema_keys, kwargs)
 
 
