@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='zaifapi',
-    version='1.3.5',
+    version='1.3.6',
     description='Zaif Api Library',
     long_description='https://pypi.python.org/pypi/zaifapi',
     url='https://github.com/Akira-Taniguchi/zaifapi',
