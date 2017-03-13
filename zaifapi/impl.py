@@ -166,14 +166,20 @@ class ZaifPublicApi(AbsZaifApi):
 class _AbsZaifPrivateApi(AbsZaifApi):
     _API_URL = '{}://{}/tapi'
 
+    def __init__(self, nonce=None):
+        if nonce is None:
+            now = datetime.now()
+            nonce = int(time.mktime(now.timetuple()))
+        self._nonce = nonce
+
     @abstractmethod
     def get_header(self, params):
         raise NotImplementedError()
 
     def _get_parameter(self, func_name, params):
         params['method'] = func_name
-        now = datetime.now()
-        params['nonce'] = now.microsecond
+        self._nonce += 1
+        params['nonce'] = self._nonce
         return urlencode(params)
 
     def _execute_api(self, func_name, schema_keys=None, params=None):
@@ -233,9 +239,10 @@ class _AbsZaifPrivateApi(AbsZaifApi):
 
 
 class ZaifPrivateApi(_AbsZaifPrivateApi):
-    def __init__(self, key, secret):
+    def __init__(self, key, secret, nonce=None):
         self._key = key
         self._secret = secret
+        super(ZaifPrivateApi, self).__init__(nonce)
 
     def get_header(self, params):
         signature = hmac.new(bytearray(self._secret.encode('utf-8')), digestmod=hashlib.sha512)
@@ -247,8 +254,9 @@ class ZaifPrivateApi(_AbsZaifPrivateApi):
 
 
 class ZaifPrivateTokenApi(_AbsZaifPrivateApi):
-    def __init__(self, token):
+    def __init__(self, token, nonce=None):
         self._token = token
+        super(ZaifPrivateTokenApi, self).__init__(nonce)
 
     def get_header(self, params):
         return {
