@@ -173,7 +173,7 @@ class _AbsZaifPrivateApi(AbsZaifApi):
     def _get_parameter(self, func_name, params):
         params['method'] = func_name
         now = datetime.now()
-        params['nonce'] = int(time.mktime(now.timetuple())) * 1000000 + now.microsecond
+        params['nonce'] = now.microsecond
         return urlencode(params)
 
     def _execute_api(self, func_name, schema_keys=None, params=None):
