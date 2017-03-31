@@ -18,6 +18,11 @@ zaifが公開しているAPIを簡単に呼べる用にしました。
     
     zaif = ZaifPrivateApi(key, secret)
     print(zaif.get_info())
+    # 次回利用時のためにnonceを保存しておく
+    nonce = zaif.nonce
+    zaif = ZaifPrivateApi(key, secret, nonce)
+    print(zaif.get_info2())
+    
     zaif = ZaifPrivateTokenApi(token)
     print(zaif.get_info())
     
