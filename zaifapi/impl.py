@@ -56,6 +56,9 @@ SCHEMA = {
     'opt_fee': {
         'type': 'number'
     },
+    'adding_fee': {
+        'type': 'number'
+    },
     'order_id': {
         'required': True,
         'type': 'integer'
@@ -230,7 +233,7 @@ class _AbsZaifPrivateApi(AbsZaifApi):
         return self._inner_history_api(inspect.currentframe().f_code.co_name, kwargs)
 
     def withdraw(self, **kwargs):
-        schema_keys = ['currency', 'address', 'message', 'amount', 'opt_fee']
+        schema_keys = ['currency', 'address', 'message', 'amount', 'opt_fee', 'adding_fee']
         return self._execute_api(inspect.currentframe().f_code.co_name, schema_keys, kwargs)
 
     def cancel_order(self, **kwargs):
